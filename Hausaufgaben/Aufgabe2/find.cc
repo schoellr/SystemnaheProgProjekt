@@ -1,5 +1,7 @@
 #include <iostream>
 #include <sstream>
+#include <dirent.h>
+
 // Testeingabe: find Testordner -name pattern -type f -follow -xdev
 int main(int argc, char *argv[]){
     std::string pattern, type;
@@ -31,6 +33,16 @@ int main(int argc, char *argv[]){
             xdev = true;
         }
         std::cout << argv[i] << std::endl;
+    }
+
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(".");
+    if (d) {
+        while ((dir = readdir(d)) != NULL) {
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
     }
 
 
