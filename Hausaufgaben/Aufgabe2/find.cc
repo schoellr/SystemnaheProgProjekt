@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <dirent.h>
+#include <fnmatch.h>
 
 //Funktion Ausgabe find
 void print_files(std::string dirname, std::string pattern, std::string type, bool follow, bool xdev){
@@ -17,13 +18,34 @@ void print_files(std::string dirname, std::string pattern, std::string type, boo
                 temp += dirname + "/";
                 temp += std::string(dir->d_name);
                 if(type == "none"){
-                    printf("%s\n", temp.c_str());
+                    if(pattern == "none"){
+                        printf("%s\n", temp.c_str());
+                    }
+                    else {
+                        if (fnmatch(pattern.c_str(), std::string(dir->d_name).c_str(),0) == 0){
+                            printf("%s\n", temp.c_str());
+                        }
+                    }
                 }
                 else if (type == "f" && dir->d_type == DT_REG){
-                    printf("%s\n", temp.c_str());
+                    if(pattern == "none"){
+                        printf("%s\n", temp.c_str());
+                    }
+                    else {
+                        if (fnmatch(pattern.c_str(), std::string(dir->d_name).c_str(),0) == 0){
+                            printf("%s\n", temp.c_str());
+                        }
+                    }
                 }
                 else if (type == "d" && dir->d_type == DT_DIR){
-                    printf("%s\n", temp.c_str());
+                    if(pattern == "none"){
+                        printf("%s\n", temp.c_str());
+                    }
+                    else {
+                        if (fnmatch(pattern.c_str(), std::string(dir->d_name).c_str(),0) == 0){
+                            printf("%s\n", temp.c_str());
+                        }
+                    }
                 }
                 if (dir->d_type == DT_DIR && std::string(dir->d_name) != "." && std::string(dir->d_name) != ".."){
                     print_files( dirname + "/" + std::string(dir->d_name), pattern, type, follow, xdev);
