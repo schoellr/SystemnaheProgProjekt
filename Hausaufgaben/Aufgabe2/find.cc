@@ -2,9 +2,10 @@
 #include <sstream>
 #include <dirent.h>
 #include <fnmatch.h>
+#include <sys/stat.h>
 
 //Funktion Ausgabe find
-void print_files(std::string dirname, std::string pattern, std::string type, bool follow, bool xdev){
+void print_files(std::string dirname, std::string pattern, std::string type, bool follow, bool xdev, int startvolume){
     DIR *d; // DAteistruktur
     struct dirent *dir; //dirent ist eintrag in Directory, sagt mir was es ist (Ordner, Datei)
     d = opendir(dirname.c_str());
@@ -48,7 +49,16 @@ void print_files(std::string dirname, std::string pattern, std::string type, boo
                     }
                 }
                 if (dir->d_type == DT_DIR && std::string(dir->d_name) != "." && std::string(dir->d_name) != ".."){
-                    print_files( dirname + "/" + std::string(dir->d_name), pattern, type, follow, xdev);
+                    struct stat tempstat;
+                    stat(temp.c_str(), &tempstat);
+                    if(xdev){
+                        if (startvolume == tempstat.st_dev){
+                            print_files( dirname + "/" + std::string(dir->d_name), pattern, type, follow, xdev, startvolume);
+                        }
+                    }
+                    else {
+                        print_files( dirname + "/" + std::string(dir->d_name), pattern, type, follow, xdev, startvolume);
+                    }
                 }
             }
 
@@ -90,8 +100,10 @@ int main(int argc, char *argv[]){
         }
         std::cout << argv[i] << std::endl;
     }
-
-    print_files(dirname, pattern, type, follow, xdev);
+    struct stat startstat;
+    stat(dirname.c_str(), &startstat);
+    int startvolume = startstat.st_dev;
+    print_files(dirname, pattern, type, follow, xdev, startvolume);
 
 
     return 0;
