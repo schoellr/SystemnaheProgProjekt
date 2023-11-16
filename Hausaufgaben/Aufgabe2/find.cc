@@ -48,6 +48,33 @@ void print_files(std::string dirname, std::string pattern, std::string type, boo
                         }
                     }
                 }
+                else if(follow &&dir->d_type == DT_LNK){
+                    struct stat tempstat2;
+                    stat(temp.c_str(), &tempstat2);
+                    if (S_ISDIR(tempstat2.st_mode)){
+                        if (type != "f") {
+                            if (pattern == "none") {
+                                printf("%s\n", temp.c_str());
+                            } else {
+                                if (fnmatch(pattern.c_str(), std::string(dir->d_name).c_str(), 0) == 0) {
+                                    printf("%s\n", temp.c_str());
+                                }
+                            }
+                        }
+                        print_files( dirname + "/" + std::string(dir->d_name), pattern, type, follow, xdev, startvolume);
+                    }
+                    else{
+                        if (type != "d") {
+                            if (pattern == "none") {
+                                printf("%s\n", temp.c_str());
+                            } else {
+                                if (fnmatch(pattern.c_str(), std::string(dir->d_name).c_str(), 0) == 0) {
+                                    printf("%s\n", temp.c_str());
+                                }
+                            }
+                        }
+                    }
+                }
                 if (dir->d_type == DT_DIR && std::string(dir->d_name) != "." && std::string(dir->d_name) != ".."){
                     struct stat tempstat;
                     stat(temp.c_str(), &tempstat);
@@ -98,7 +125,7 @@ int main(int argc, char *argv[]){
         if(strcmp(argv[i], "-xdev") == 0){
             xdev = true;
         }
-        std::cout << argv[i] << std::endl;
+        //std::cout << argv[i] << std::endl;
     }
     struct stat startstat;
     stat(dirname.c_str(), &startstat);

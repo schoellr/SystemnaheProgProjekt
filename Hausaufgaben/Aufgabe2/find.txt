@@ -1,0 +1,13 @@
+/Volumes/Testbed/testbed/basic/B/BB2/bbb1
+/Volumes/Testbed/testbed/basic/B/BB2/.BBB4/bbbb1
+/Volumes/Testbed/testbed/basic/B/BB2/bbb2
+/Volumes/Testbed/testbed/basic/B/BB2/BBB2/bbbb1
+/Volumes/Testbed/testbed/basic/B/BB2/BBB3/LINK_TO_BBB2/bbbb1
+/Volumes/Testbed/testbed/basic/B/BB2/BBB3/bbbb1
+/Volumes/Testbed/testbed/basic/B/BB1/bbb1
+/Volumes/Testbed/testbed/basic/B/BB1/bbb3
+/Volumes/Testbed/testbed/basic/B/BB1/bbb2
+/Volumes/Testbed/testbed/basic/B/bb1
+/Volumes/Testbed/testbed/basic/LINK_TO_B_BB1/bbb1
+/Volumes/Testbed/testbed/basic/LINK_TO_B_BB1/bbb3
+/Volumes/Testbed/testbed/basic/LINK_TO_B_BB1/bbb2
