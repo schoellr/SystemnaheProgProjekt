@@ -2,10 +2,12 @@ SRC = main.c sincos.c
 OBJ = $(SRC:.c=.o)
 
 sincos: $(OBJ)
-	gcc -o $@ $+
+	gcc -Wall -Wextra -o $@ $+
 
 %.o: %.c Makefile
-	gcc -Wall -Wextra -c -o $@ $<
+	gcc -MMD -Wall -Wextra -c -o $@ $<
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) sincos sincos.d main.d
+
+-include sincos.d main.d

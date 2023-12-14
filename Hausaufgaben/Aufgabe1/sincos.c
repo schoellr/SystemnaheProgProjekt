@@ -3,6 +3,7 @@
 #include "sincos.hh"
 
 void sincos(int input){
+
     int a = input;
     for (int i = 0; i < a+1; i=i+1){
         double winkel = (360/a)*i;
